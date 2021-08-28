@@ -9,7 +9,9 @@ export interface ProfileData {
 
 export interface User {
     guid: Guid;
+    name: string;
     emoji: string;
+    location: Location,
     lastPlayed?: SongData;
     favouriteSongs: FavouriteSongs;
     followingUser: [Guid]
