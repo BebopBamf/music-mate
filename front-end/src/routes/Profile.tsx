@@ -1,4 +1,4 @@
-import { ComponentChildren, FunctionalComponent, render } from "preact";
+import { ComponentChildren, FunctionalComponent, render, h } from "preact";
 import { useState } from 'preact/hooks';
 import { ProfileTitleBar, ProfileCardsList } from '../components'
 import { map } from 'lodash/fp';
@@ -9,7 +9,19 @@ interface Props {
 }
 
 const Profile: FunctionalComponent<Props> = ({ guid }) => {
-  const [profileData, setProfileData] = useState({ guid: '12323123-12323123-12323123-12323123', name: 'Euan Mendoza', emoji: '🍆', location: 'Sydney Australia' });
+  const [profileData, setProfileData] = useState({ 
+      guid: '12323123-12323123-12323123-12323123',
+      name: 'Euan Mendoza',
+      emoji: '🍆',
+      location: 'Sydney Australia',
+      favouriteSongs: {
+        first: null,
+        second: null,
+        third: null
+      }
+    }
+  );
+
   const [cardData, setCardData] = useState([]);
 
   return (

@@ -2,12 +2,15 @@ import { ComponentChildren, FunctionalComponent, h } from "preact";
 
 interface Props {
   children?: ComponentChildren;
+  num: number;
 }
 
-const CardComponent: FunctionalComponent<Props> = (props: Props) => {
+const CardComponent: FunctionalComponent<Props> = ({ num }: Props) => {
   return (
     <div>
-      <div>Some Random Stub</div>
+      <div>
+        <h1>{`Favourite Song No. ${num}`}</h1>
+      </div>
       <div>Some Random Description</div>
     </div>
   );

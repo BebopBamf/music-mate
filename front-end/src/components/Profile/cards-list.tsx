@@ -1,27 +1,31 @@
 import { ComponentChildren, FunctionalComponent, h } from "preact";
 import { useState } from 'preact/hooks';
-import { map } from "lodash/fp";
-import { CardData } from '../../data/profile';
+import { map, zip } from "lodash/fp";
 import CardComponent from './cards';
+import { FavouriteSongs } from 'data/profile';
 
 interface Props {
   children?: ComponentChildren;
+  // favouriteSongs: FavouriteSongs; 
 }
 
 const TitleBar: FunctionalComponent<Props> = (props: Props) => {
-  
-  const createCards = map((data: CardData) => (
-    <li key={data.id} class="bg-white shadow overflow-hidden rounded-md px-6 py-4">
-        <CardComponent />
-    </li>
-  ));
-
-  const [cardDataList, setCardDataList] = useState([{id: 0}, {id: 1}, {id: 2}]);
-
   return (
     <div>
       <ul role="list" class="space-y-3">
-        {createCards(cardDataList)}
+        
+        <li key={0} class="bg-white shadow overflow-hidden rounded-md px-6 py-4">
+          <CardComponent num={1} />
+        </li>
+
+        <li key={1} class="bg-white shadow overflow-hidden rounded-md px-6 py-4">
+          <CardComponent num={2} />
+        </li>
+
+        <li key={2} class="bg-white shadow overflow-hidden rounded-md px-6 py-4">
+          <CardComponent num={3} />
+        </li>
+
       </ul>
     </div>
   );
