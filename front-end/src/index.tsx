@@ -10,12 +10,12 @@ import "./style.css";
 const App = () => {
   return (
     <div className="flex flex-col w-screen h-screen bg-gray-50">
-      <SWRConfig
-        value={{
-          fetcher: fetcher,
-        }}
-      >
-        <UserProvider>
+      <UserProvider>
+        <SWRConfig
+          value={{
+            fetcher: fetcher,
+          }}
+        >
           <Router>
             <Home path="/" />
             <Messages path="/messages/:guid" />
@@ -23,8 +23,8 @@ const App = () => {
             <Profile path="/profile" isEditable={true} />
             <Profile path="/profile/:guid" isEditable={false} />
           </Router>
-        </UserProvider>
-      </SWRConfig>
+        </SWRConfig>
+      </UserProvider>
     </div>
   );
 };

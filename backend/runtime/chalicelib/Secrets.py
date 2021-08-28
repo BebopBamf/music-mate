@@ -4,6 +4,7 @@
 
 import boto3
 import base64
+import json
 from botocore.exceptions import ClientError
 
 
@@ -53,3 +54,5 @@ def get_secret():
             )
 
     # Your code goes here.
+    secret = json.loads(secret)
+    return secret["client_secret"]
