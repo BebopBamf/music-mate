@@ -1,8 +1,9 @@
 import { FunctionalComponent, render } from "preact";
 import { useRef, useState } from "preact/hooks";
-import { h } from "preact";
+import { h, Fragment } from "preact";
 import { JSXInternal } from "preact/src/jsx";
 import { useUser } from "../context/UserContext";
+import { BASE_URL } from "../config/api";
 
 function getRandomString(bytes: number) {
   const randomValues = new Uint8Array(bytes);
@@ -19,10 +20,36 @@ const SignUp: FunctionalComponent = () => {
   const [unconfirmedUser, setUnconfirmedUser] = useState<string>("");
   const [tempPass, setTempPass] = useState<string>("");
   const [authStage, setAuthStage] = useState<number>(0);
+  const [name, setName] = useState<string>("");
   const [authStageError, setAuthStageError] = useState<string | null>();
   const inputRef = useRef<HTMLInputElement>(null);
-
+  if (user?.user) {
+    window.session = user?.getToken();
+    window.baseurl = BASE_URL;
+  }
   const authStages = [
+    {
+      label: "Enter your name",
+      type: "name",
+      placeholder: "Name",
+      pattern: /^.{4,64}/,
+      next: (
+        event: JSXInternal.TargetedEvent<HTMLFormElement, Event>,
+        validate: RegExp
+      ) => {
+        event.preventDefault();
+        if (inputRef.current) {
+          const validationCode = inputRef.current.value;
+          if (!validate.test(validationCode)) {
+            setAuthStageError("Whoops! Your name looks odd. Try again");
+            return;
+          }
+          setName(inputRef.current.value);
+          inputRef.current.value = "";
+          setAuthStage((num) => num + 1);
+        }
+      },
+    },
     {
       label: "Enter your phone number",
       type: "tel",
@@ -76,6 +103,7 @@ const SignUp: FunctionalComponent = () => {
           }
           user
             ?.confirmSignUp(unconfirmedUser, tempPass, validationCode)
+            .then(() => setAuthStage((num) => num + 1))
             .catch((err) => {
               console.log(err);
               setAuthStageError(err.message);
@@ -91,7 +119,20 @@ const SignUp: FunctionalComponent = () => {
       next: (
         event: JSXInternal.TargetedEvent<HTMLFormElement, Event>,
         validate: RegExp
-      ) => {},
+      ) => {
+        event.preventDefault();
+        const headers = new Headers();
+        headers.append("Authorization", user?.getToken() || "");
+        fetch(BASE_URL + "/spotify/connect", {
+          headers: headers,
+        })
+          .then((data) => data.json())
+          .then(({ auth_url }) => {
+            console.log(auth_url);
+            window.location = auth_url;
+          })
+          .catch((err) => console.log(err));
+      },
     },
   ];
 
@@ -109,29 +150,32 @@ const SignUp: FunctionalComponent = () => {
         className="flex flex-col items-stretch gap-4"
         onSubmit={(event) => next(event, pattern)}
       >
-        if
-        <label
-          className="text-base font-medium text-center text-gray-600"
-          for="stageinput"
-        >
-          {label}
-        </label>
-        <input
-          type={type}
-          name="stageinput"
-          id="stageinput"
-          ref={inputRef}
-          className="p-3 border-b-2 border-gray-200 rounded-md shadow-sm outline-none"
-          placeholder={placeholder}
-        />
-        {authStageError && (
-          <span className="p-2 text-center text-red-600 border-2 border-red-600 rounded-md">
-            {authStageError}
-          </span>
+        {type != "none" && (
+          <Fragment>
+            <label
+              className="text-base font-medium text-center text-gray-600"
+              for="stageinput"
+            >
+              {label}
+            </label>
+            <input
+              type={type}
+              name="stageinput"
+              id="stageinput"
+              ref={inputRef}
+              className="p-3 border-b-2 border-gray-200 rounded-md shadow-sm outline-none"
+              placeholder={placeholder}
+            />
+            {authStageError && (
+              <span className="p-2 text-center text-red-600 border-2 border-red-600 rounded-md">
+                {authStageError}
+              </span>
+            )}
+          </Fragment>
         )}
         <button
           type="submit"
-          className="w-full items-center px-8 py-4 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="items-center w-full px-8 py-4 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           <span>Next</span>
         </button>
