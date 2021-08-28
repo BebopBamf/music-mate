@@ -1,6 +1,6 @@
 import { h, render } from "preact";
 import { Router } from "preact-router";
-import { Home } from "./routes";
+import { Home, Profile } from "./routes";
 
 import "./style.css";
 
@@ -9,6 +9,7 @@ const App = () => {
     <div className="w-screen h-screen bg-gray-50 flex flex-col">
       <Router>
         <Home path="/" />
+        <Profile path="/profile" />
       </Router>
     </div>
   );
