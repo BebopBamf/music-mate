@@ -29,7 +29,7 @@ const EmojiPicker: FunctionalComponent<Props> = (props: Props) => {
             </button>
           </div>
         </div>
-        <div class="overflow-y-scroll bg-gray-50 flex-1 pb-4">
+        <div className="overflow-y-scroll bg-gray-50 flex-1 pb-4">
           <div className="grid grid-cols-6 gap-4 px-4 py-4 font-emoji">
             {emojis.map((emoji: string) => (
               <a

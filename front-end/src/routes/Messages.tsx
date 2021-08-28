@@ -7,10 +7,11 @@ import { SongPicker } from "components";
 import { FunctionalComponent, h } from "preact";
 import { useState } from "preact/hooks";
 import EmojiPicker from "components/EmojiPicker/EmojiPicker";
+import { SongData } from "data/song";
 
 const Messages: FunctionalComponent = () => {
   const [isSongPickerOpen, setIsSongPickerOpen] = useState(false);
-  const [selectedSong, setSelectedSong] = useState("");
+  const [selectedSong, setSelectedSong] = useState<SongData>();
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState("");
 
@@ -36,7 +37,7 @@ const Messages: FunctionalComponent = () => {
       <SongPicker
         isOpen={isSongPickerOpen}
         setIsOpen={(value: boolean) => setIsSongPickerOpen(value)}
-        setSelectedSong={(value: string) => setSelectedSong(value)}
+        setSelectedSong={(song: SongData) => setSelectedSong(song)}
       />
       <EmojiPicker
         isOpen={isEmojiPickerOpen}
