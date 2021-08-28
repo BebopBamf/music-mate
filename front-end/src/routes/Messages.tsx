@@ -8,43 +8,63 @@ import { FunctionalComponent, h } from "preact";
 import { useState } from "preact/hooks";
 import EmojiPicker from "components/EmojiPicker/EmojiPicker";
 import { SongData } from "data/song";
+import { MessageData } from "data/message";
+import { Guid } from "data/user";
 
-const Messages: FunctionalComponent = () => {
+interface Props {
+  guid?: Guid;
+}
+
+const Messages: FunctionalComponent<Props> = ({ guid }) => {
   const [isSongPickerOpen, setIsSongPickerOpen] = useState(false);
-  const [selectedSong, setSelectedSong] = useState<SongData>();
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
-  const [selectedEmoji, setSelectedEmoji] = useState("");
+
+  const [messageData, setMessageData] = useState<MessageData>({
+    song: undefined,
+    emoji: "🎵",
+  });
+
+  console.log(guid);
+
+  const toggleEmojiPicker = () =>
+    setIsEmojiPickerOpen((currentValue) => !currentValue);
+  const toggleSongPicker = () =>
+    setIsSongPickerOpen((currentValue) => !currentValue);
+
+  const handleSendMessage = (messageData: MessageData) => {
+    //TODO SEND MESSAGE TO API ENDPOINT
+    console.log(messageData);
+  };
 
   return (
-    <div className="h-screen w-screen flex flex-col">
+    <div className="h-screen w-screen flex flex-col bg-gray-300">
       <MessagesHeader />
       <MessagesBody />
-      <button
-        onClick={() => {
-          setIsSongPickerOpen(true);
-        }}
-      >
-        Open Song Picker
-      </button>
-      <button
-        onClick={() => {
-          setIsEmojiPickerOpen(true);
-        }}
-      >
-        Open Emoji Picker
-      </button>
-      <MessagesFooter />
+      <MessagesFooter
+        messageData={messageData}
+        toggleEmojiPicker={toggleEmojiPicker}
+        toggleSongPicker={toggleSongPicker}
+        handleSendMessage={handleSendMessage}
+      />
       <SongPicker
         isOpen={isSongPickerOpen}
         setIsOpen={(value: boolean) => setIsSongPickerOpen(value)}
-        setSelectedSong={(song: SongData) => setSelectedSong(song)}
+        setSelectedSong={(song: SongData) =>
+          setMessageData((currentValue) => ({
+            ...currentValue,
+            song: song,
+          }))
+        }
       />
       <EmojiPicker
         isOpen={isEmojiPickerOpen}
         setIsOpen={(value: boolean) => setIsEmojiPickerOpen(value)}
-        currentSelection={selectedEmoji}
+        currentSelection={messageData.emoji}
         setCurrentSelection={(emoji: string) => {
-          setSelectedEmoji(emoji);
+          setMessageData((currentValue) => ({
+            ...currentValue,
+            emoji: emoji,
+          }));
         }}
       />
     </div>

@@ -14,7 +14,7 @@ const Home: FunctionalComponent = () => {
 
   const matchedProfile = (
     <Fragment>
-      <Profile id={matchedProfileId} isEditable={false} />
+      <Profile guid={matchedProfileId} isEditable={false} />
     </Fragment>
   );
 
@@ -39,6 +39,7 @@ const Home: FunctionalComponent = () => {
     //TEMP CODE IN PLACE OF API CALL
     setTimeout(() => {
       setIsModalLoading(false);
+      setMatchedProfileId("13db5e8e-e4b8-4590-ac3c-654419dcead5");
     }, 2000);
   };
 
@@ -55,7 +56,7 @@ const Home: FunctionalComponent = () => {
       <div className="flex items-center width-full justift-bottom">
         <button
           type="button"
-          className="w-full items-center px-8 py-4 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="w-full items-center px-8 py-4 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
           onClick={() => {
             newPlayPal();
           }}

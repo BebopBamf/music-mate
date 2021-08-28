@@ -1,4 +1,4 @@
-import { ComponentChildren, FunctionalComponent, h } from "preact";
+import { FunctionalComponent, h } from "preact";
 import { UserIcon, Badge } from "components/Common";
 import { ChevronRight, MusicNote } from "components/Common/Icons";
 import { Location } from "data/user";
@@ -6,8 +6,8 @@ import { ChatData } from "data/chat";
 import { SongData } from "data/song";
 
 export interface Props {
-  children?: ComponentChildren;
-  chat: ChatData
+  chat: ChatData;
+  key: number;
 }
 
 interface SongCardProps {
@@ -22,39 +22,35 @@ const SongCard = ({ song }: SongCardProps) => {
       <div className="flex items-center justify-center">
         <MusicNote />
       </div>
-              
-      <div className="flex flex-col truncate">
-        <p className="text-md font-semibold text-gray-700 truncate">
-          {title}
-        </p>
-          <p className="text-sm text-gray-500 truncate">{artist}</p>
-      </div>
 
+      <div className="flex flex-col truncate">
+        <p className="text-md font-semibold text-gray-700 truncate">{title}</p>
+        <p className="text-sm text-gray-500 truncate">{artist}</p>
+      </div>
     </div>
   );
 };
 
 const MessageListItem: FunctionalComponent<Props> = ({ chat }: Props) => {
-  const { chatid, name, emoji, lastTrack} = chat;
-  
+  const { chatid, name, emoji, lastTrack } = chat;
+
   const formatLocation = () => {
-    return 'Sydney Australia 🇦🇺';
+    return "Sydney Australia 🇦🇺";
   };
 
   const noSong: SongData = {
-    uri: '',
-    title: 'No Song Found',
-    artist: 'No Artist Found',
+    uri: "",
+    title: "No Song Found",
+    artist: "No Artist Found",
     explicit: false,
     duration: 0,
-    image: '',
-  }
+    image: "",
+  };
 
   return (
-    <a href={`/profile/${chatid}`}>
-      <li className="">
+    <li className="">
+      <a href={`/messages/${chatid}`}>
         <div className="flex flex-row py-4 space-x-4 items-center">
-          
           <div className="flex-shrink-0 flex flex-col items-center">
             <UserIcon emoji={emoji} />
             <div className="-mt-4">
@@ -67,15 +63,15 @@ const MessageListItem: FunctionalComponent<Props> = ({ chat }: Props) => {
               {name} from {formatLocation()}
             </h4>
 
-            <SongCard song={lastTrack ? lastTrack : noSong } />
+            <SongCard song={lastTrack ? lastTrack : noSong} />
           </div>
 
           <div className="flex items-center justify-center">
             <ChevronRight />
           </div>
         </div>
-      </li>
-    </a>
+      </a>
+    </li>
   );
 };
 
