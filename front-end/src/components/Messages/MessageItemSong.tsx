@@ -1,5 +1,6 @@
 import { FunctionalComponent, h } from "preact";
 import { Explicit } from "components/Common/Icons";
+import { formatTime } from "components/Common/Helpers";
 
 interface Props {
   isSender: boolean;
@@ -13,21 +14,6 @@ const MessageItemSong: FunctionalComponent<Props> = (props: Props) => {
     duration: 190213,
     imageUrl:
       "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
-  };
-
-  const formatTimeStamp = (s: number) => {
-    var ms = s % 1000;
-    s = (s - ms) / 1000;
-    var secs = s % 60;
-    s = (s - secs) / 60;
-    var mins = s % 60;
-    var hrs = (s - mins) / 60;
-
-    return (
-      (hrs > 0 ? `${hrs}h ` : "") +
-      (mins > 0 ? `${mins}m ` : "") +
-      (secs > 0 ? `${secs}s ` : "")
-    );
   };
 
   return (
@@ -52,7 +38,7 @@ const MessageItemSong: FunctionalComponent<Props> = (props: Props) => {
           } flex items-center truncate flex-shrink-0`}
         >
           <div className={`${props.isSender ? "ml-2" : "mr-2"} truncate`}>
-            {formatTimeStamp(song.duration)}
+            {formatTime(song.duration)}
           </div>
           <Explicit />
         </div>
