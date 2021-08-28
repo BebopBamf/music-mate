@@ -3,6 +3,7 @@ import { Close, Explicit } from "components/Common/Icons";
 import SlideUp from "components/Common/SlideUp/SlideUp";
 import { Fragment, FunctionalComponent, h } from "preact";
 import { useState } from "preact/hooks";
+import { debounce } from "lodash";
 
 interface Props {
   isOpen: boolean;
@@ -13,6 +14,13 @@ interface Props {
 const SongPicker: FunctionalComponent<Props> = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const updateSong = (e: Event) => {
+    const inputField = e.target as HTMLInputElement;
+    setSearchQuery(inputField.value);
+
+    console.log(searchQuery);
+  };
 
   const songs = [
     {
@@ -97,6 +105,9 @@ const SongPicker: FunctionalComponent<Props> = (props: Props) => {
             type="text"
             name="name"
             id="name"
+            value={searchQuery}
+            onInput={updateSong}
+            onKeyDown={debounce(() => console.log("Debounced!"), 1000, { 'maxWait': 2000 })}
             autocomplete="off"
             className="block w-full h-12 border-0 border-b-2 border-transparent bg-gray-50 focus:border-gray-300 focus:ring-0 shadow-sm"
             placeholder="Search for a song..."
