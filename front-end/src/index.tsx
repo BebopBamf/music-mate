@@ -24,6 +24,7 @@ const App = () => {
             <Messages path="/messages" />
             <SignUp path="/signup" />
             <Profile path="/profile" isEditable={true} />
+            <Profile path="/profile/:guid" isEditable={false} />
           </Router>
         </UserProvider>
       </SWRConfig>

@@ -1,15 +1,17 @@
 import { FunctionalComponent, render, h } from "preact";
 import { useState } from "preact/hooks";
 import { ProfileCards, ProfileImage } from "../components/Profile";
-import { User } from "data/user";
+import { User, Guid } from "data/user";
 import ProfileTitle from "components/Profile/ProfileTitle";
 
 interface Props {
-  guid?: string;
+  guid?: Guid;
   isEditable: boolean;
 }
 
 const Profile: FunctionalComponent<Props> = ({ guid, isEditable }) => {
+  console.log(`GUID: ${guid}`);
+
   const isLoading = false;
 
   const stubUser: User = {

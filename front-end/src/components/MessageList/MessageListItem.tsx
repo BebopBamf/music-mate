@@ -35,7 +35,7 @@ const SongCard = ({ song }: SongCardProps) => {
 };
 
 const MessageListItem: FunctionalComponent<Props> = ({ chat }: Props) => {
-  const { name, emoji, lastTrack} = chat;
+  const { chatid, name, emoji, lastTrack} = chat;
   
   const formatLocation = () => {
     return 'Sydney Australia 🇦🇺';
@@ -51,7 +51,7 @@ const MessageListItem: FunctionalComponent<Props> = ({ chat }: Props) => {
   }
 
   return (
-    <a href="#">
+    <a href={`/profile/${chatid}`}>
       <li className="">
         <div className="flex flex-row py-4 space-x-4 items-center">
           
