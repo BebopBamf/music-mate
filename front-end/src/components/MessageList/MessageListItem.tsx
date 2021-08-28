@@ -1,13 +1,13 @@
 import { ComponentChildren, FunctionalComponent, h } from "preact";
 import { UserIcon, Badge } from "components/Common";
 import { ChevronRight, MusicNote } from "components/Common/Icons";
-import { User, Location } from "data/user";
+import { Location } from "data/user";
 import { ChatData } from "data/chat";
 import { SongData } from "data/song";
 
 export interface Props {
   children?: ComponentChildren;
-  user: User
+  chat: ChatData
 }
 
 interface SongCardProps {
@@ -34,13 +34,11 @@ const SongCard = ({ song }: SongCardProps) => {
   );
 };
 
-const MessageListItem: FunctionalComponent<Props> = ({ user }: Props) => {
-  const { name, emoji, location, lastPlayed } = user;
+const MessageListItem: FunctionalComponent<Props> = ({ chat }: Props) => {
+  const { name, emoji, lastTrack} = chat;
   
-  const formatLocation = (location: Location) => {
-    const { name, emoji } = location;
-
-    return `${name} ${emoji}`;
+  const formatLocation = () => {
+    return 'Sydney Australia 🇦🇺';
   };
 
   const noSong: SongData = {
@@ -66,10 +64,10 @@ const MessageListItem: FunctionalComponent<Props> = ({ user }: Props) => {
 
           <div className="flex flex-col flex-1 truncate">
             <h4 className="text-md font-bold text-gray-900 truncate">
-              {name} from {formatLocation(location)}
+              {name} from {formatLocation()}
             </h4>
 
-            <SongCard song={lastPlayed ? lastPlayed : noSong } />
+            <SongCard song={lastTrack ? lastTrack : noSong } />
           </div>
 
           <div className="flex items-center justify-center">
