@@ -2,11 +2,6 @@ import { SongData } from "./song";
 
 export type Guid = string;
 
-export interface ProfileData {
-    guid: Guid;
-    favouriteSongs: FavouriteSongs;
-};
-
 export interface User {
     guid: Guid;
     name: string;
