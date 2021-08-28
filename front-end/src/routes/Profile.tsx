@@ -1,4 +1,4 @@
-import { ComponentChildren, FunctionalComponent, render } from "preact";
+import { ComponentChildren, FunctionalComponent, render, h } from "preact";
 import { useState } from "preact/hooks";
 import { ProfileTitleBar, ProfileCardsList } from "../components";
 import { map } from "lodash/fp";

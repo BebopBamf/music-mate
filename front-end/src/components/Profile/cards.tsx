@@ -8,12 +8,14 @@ interface Props {
 }
 
 const CardComponent: FunctionalComponent<Props> = ({ num, song }: Props) => {
+  const { title, artist } = song;
+
   return (
     <div>
       <div>
         <h1>{`Favourite Song No. ${num}`}</h1>
       </div>
-      <div>Some Random Description</div>
+      <div>{`song: ${title} by ${artist}`}</div>
     </div>
   );
 };
