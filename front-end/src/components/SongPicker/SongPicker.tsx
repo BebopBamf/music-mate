@@ -4,6 +4,7 @@ import { SongData } from "data/song";
 import { Fragment, FunctionalComponent, h } from "preact";
 import { useState } from "preact/hooks";
 import SongPickerResult from "./SongPickerResult";
+import { debounce } from "lodash";
 
 interface Props {
   isOpen: boolean;
@@ -18,6 +19,13 @@ const SongPicker: FunctionalComponent<Props> = ({
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const updateSong = (e: Event) => {
+    const inputField = e.target as HTMLInputElement;
+    setSearchQuery(inputField.value);
+
+    console.log(searchQuery);
+  };
 
   const songs = [
     {
@@ -54,6 +62,11 @@ const SongPicker: FunctionalComponent<Props> = ({
             type="text"
             name="name"
             id="name"
+            value={searchQuery}
+            onInput={updateSong}
+            onKeyDown={debounce(() => console.log("Debounced!"), 1000, {
+              maxWait: 2000,
+            })}
             autocomplete="off"
             className="block w-full h-12 border-0 border-b-2 border-transparent bg-gray-50 focus:border-gray-300 focus:ring-0 shadow-sm"
             placeholder="Search for a song..."
