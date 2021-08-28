@@ -47,6 +47,8 @@ const MessageListItem: FunctionalComponent<Props> = ({ chat }: Props) => {
     image: "",
   };
 
+  // TODO: Replace userID with api real user Ids
+  const userid = "13db5e8e-e4b8-4590-ac3c-654419dcead5";
   return (
     <li className="">
       <a href={`/messages/${chatid}`}>
