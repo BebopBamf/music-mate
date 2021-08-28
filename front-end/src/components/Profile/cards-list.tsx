@@ -2,7 +2,7 @@ import { ComponentChildren, FunctionalComponent, h } from "preact";
 import { useState } from 'preact/hooks';
 import { map, zip } from "lodash/fp";
 import CardComponent from './cards';
-import { FavouriteSongs } from 'data/profile';
+import { FavouriteSongs } from 'data/user';
 
 interface Props {
   children?: ComponentChildren;
