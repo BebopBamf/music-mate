@@ -1,0 +1,7 @@
+**/node_modules
+.chalicevenv
+backend/runtime/.chalice/deployments/
+backend/runtime/.chalice/venv/
+**/cdk.out/*
+**/chalice.out/*
+**/__pycache__/*
