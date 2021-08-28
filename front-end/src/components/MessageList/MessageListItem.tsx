@@ -1,13 +1,7 @@
 import { ComponentChildren, FunctionalComponent, h } from "preact";
 import { UserIcon, Badge } from "components/Common";
 import { ChevronRight, MusicNote } from "components/Common/Icons";
-
-export interface SongData {
-  name: String;
-  location: String;
-  songName: String;
-  songArtist: String;
-}
+import { SongData } from "data/song";
 
 export interface MessageListItemProps {
   children?: ComponentChildren;
