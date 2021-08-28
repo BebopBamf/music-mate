@@ -10,6 +10,9 @@ module.exports = {
         "spotify-green-dark": "#1DB954",
       },
     },
+    fontFamily: {
+      emoji: ["Emoji"],
+    },
   },
   variants: {
     extend: {},

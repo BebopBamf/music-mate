@@ -3,17 +3,17 @@ import { Dialog, Transition } from "@headlessui/react";
 
 interface Props {
   children: ComponentChildren;
-  open: boolean;
-  setOpen: (value: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
 }
 
 const SlideUp: FunctionalComponent<Props> = (props: Props) => {
   return (
-    <Transition.Root show={props.open} as={Fragment}>
+    <Transition.Root show={props.isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 overflow-hidden"
-        onClose={props.setOpen}
+        onClose={props.setIsOpen}
       >
         <div className="absolute inset-0 overflow-hidden">
           <Dialog.Overlay className="absolute inset-0 bg-gray-200 opacity-90" />

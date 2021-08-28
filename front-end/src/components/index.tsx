@@ -1,3 +1,4 @@
 export { MessageList } from "./MessageList";
-export { SongSelector } from "./SongSelector";
+export { SongPicker } from "./SongPicker";
+export { EmojiPicker } from "./EmojiPicker";
 export { ProfileTitleBar, ProfileCardsList } from './Profile';
