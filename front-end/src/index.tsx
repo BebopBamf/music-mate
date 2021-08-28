@@ -7,12 +7,11 @@ import "./style.css";
 const App = () => {
   return (
     <div className="flex flex-col w-screen h-screen bg-gray-50">
-      {/*<Router>
+      <Router>
         <Home path="/" />
         <Messages path="/messages" />
         <SignUp path="/signup" />
-      </Router>*/}
-      <Messages />
+      </Router>
     </div>
   );
 };
