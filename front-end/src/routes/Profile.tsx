@@ -1,7 +1,7 @@
 import { FunctionalComponent, render, h } from "preact";
 import { useState } from "preact/hooks";
 import { ProfileCards, ProfileImage } from "components/Profile";
-import { User, ProfileData, Guid } from "data/user";
+import { User, Guid } from "data/user";
 import ProfileTitle from "components/Profile/ProfileTitle";
 import useSWR from "swr";
 import { Modal } from "components";
@@ -12,7 +12,7 @@ interface Props {
 }
 
 interface ProfileContentProps {
-  user: ProfileData;
+  user: User;
   isEditable: boolean;
 }
 
