@@ -49,7 +49,7 @@ const Home: FunctionalComponent = () => {
         <h1 className="text-3xl font-bold text-gray-900">My Music Mates</h1>
       </div>
       <div className="bg-white overflow-hidden shadow rounded-lg overflow-y-scroll flex-auto">
-        <div className="px-4 py-5 sm:p-6">
+        <div className="px-4 py-5">
           <MessageList />
         </div>
       </div>

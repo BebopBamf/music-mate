@@ -1,5 +1,4 @@
 import { FunctionalComponent, render, h } from "preact";
-import { useState } from "preact/hooks";
 import { ProfileCards, ProfileImage } from "components/Profile";
 import { User, Guid } from "data/user";
 import ProfileTitle from "components/Profile/ProfileTitle";
