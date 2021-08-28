@@ -1,17 +1,21 @@
+import { UserProvider } from "./context/UserContext";
 import { h, render } from "preact";
 import { Router } from "preact-router";
-import { Home, Messages, SignUp } from "./routes";
+import { Home, Messages, Profile, SignUp } from "./routes";
 
 import "./style.css";
 
 const App = () => {
   return (
     <div className="flex flex-col w-screen h-screen bg-gray-50">
+      <UserProvider>
       <Router>
         <Home path="/" />
         <Messages path="/messages" />
         <SignUp path="/signup" />
+        <Profile path="/profile" />
       </Router>
+      </UserProvider>
     </div>
   );
 };

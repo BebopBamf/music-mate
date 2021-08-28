@@ -11,8 +11,20 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
         exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/env", ["@babel/typescript", { jsxPragma: "h" }]],
+            plugins: [["@babel/plugin-transform-react-jsx", { pragma: "h" }]],
+          },
+        },
+      },
+      {
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false,
+        },
       },
       {
         test: /\.css$/i,

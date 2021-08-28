@@ -71,11 +71,13 @@ class ChaliceApp(cdk.Stack):
                 "sms_message": "Thanks for signing up to our awesome app! Your verification code is {####}",
             },
             sign_in_aliases={"phone": True},
-            standard_attributes={
-                "preferred_username": {"required": True, "mutable": False}
-            },
         )
-        cdk.CfnOutput(self, "UserPoolNAME", value="AppUserPool")
+        cdk.CfnOutput(self, "UserPoolID", value=userpool.user_pool_id)
         cdk.CfnOutput(self, "UserPoolARN", value=userpool.user_pool_arn)
+
+        client = userpool.add_client(
+            "CognitoClient", auth_flows={"user_password": True, "user_srp": True}
+        )
+        cdk.CfnOutput(self, "CognitoClientID", value=client.user_pool_client_id)
 
         return userpool
