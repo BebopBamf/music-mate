@@ -11,8 +11,13 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/preset-typescript": "^7.6.0",
     "@types/lodash": "^4.14.172",
     "autoprefixer": "^10.3.1",
+    "babel-loader": "^8.0.6",
     "css-loader": "^6.2.0",
     "postcss": "^8.3.6",
     "postcss-loader": "^6.1.1",
@@ -23,12 +28,7 @@
     "typescript": "^4.3.5",
     "webpack": "^5.47.1",
     "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2",
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/preset-react": "^7.6.3",
-    "@babel/preset-typescript": "^7.6.0",
-    "babel-loader": "^8.0.6"
+    "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
     "@babel/plugin-transform-react-jsx": "^7.14.9",
@@ -40,6 +40,7 @@
     "aws-amplify": "^4.2.5",
     "lodash": "^4.17.21",
     "preact": "^10.5.14",
-    "preact-router": "^3.2.1"
+    "preact-router": "^3.2.1",
+    "swr": "^1.0.0"
   }
 }

@@ -2,6 +2,7 @@ import { ComponentChildren, FunctionalComponent, h } from "preact";
 import { UserIcon, Badge } from "components/Common";
 import { ChevronRight, MusicNote } from "components/Common/Icons";
 import { User, Location } from "data/user";
+import { ChatData } from "data/chat";
 import { SongData } from "data/song";
 
 export interface Props {
