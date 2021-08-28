@@ -1,6 +1,6 @@
 import { ComponentChildren, FunctionalComponent, h } from "preact";
-import { UserIcon, Badge } from "Components/Common";
-import { ChevronRight, MusicNote } from "Components/Common/Icons";
+import { UserIcon, Badge } from "components/Common";
+import { ChevronRight, MusicNote } from "components/Common/Icons";
 
 interface Props {
   children?: ComponentChildren;
