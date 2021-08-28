@@ -1,9 +1,10 @@
 import { FunctionalComponent, render, h } from "preact";
 import { useState } from "preact/hooks";
 import useSWR from "swr";
-import { ProfileCards, ProfileImage } from "../components/Profile";
+import { ProfileCards, ProfileImage } from "components/Profile";
 import { User, ProfileData, Guid } from "data/user";
 import ProfileTitle from "components/Profile/ProfileTitle";
+import { Modal } from "components";
 
 interface Props {
   guid?: Guid;
@@ -99,6 +100,36 @@ const Profile: FunctionalComponent<Props> = ({ guid, isEditable }) => {
     ],
   };
 
+  const [profileData, setProfileData] = useState(stubUser);
+
+  const { name, emoji, location, songs } = profileData;
+
+  const saveProfile = () => {
+    //TODO: SAVE DATA TO SERVER
+  };
+
+  return (
+    <div className="flex flex-col h-full items-center justify-center">
+      <div className="px-4 w-full flex flex-col space-y-6 py-4">
+        <ProfileImage
+          emoji={profileData.emoji}
+          isEditable={isEditable}
+          setNewEmoji={(emoji) =>
+            setProfileData((currentUserData) => ({
+              ...currentUserData,
+              emoji: emoji,
+            }))
+          }
+        />
+        <ProfileTitle name={name} location={location} isEditable={isEditable} />
+        <ProfileCards
+          songs={songs}
+          setSongs={() => {}}
+          isEditable={isEditable}
+        />
+      </div>
+    </div>
+  );
   
   return <ProfileContent isEditable={true} user={stubUser} />
 };

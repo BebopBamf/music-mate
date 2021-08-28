@@ -35,6 +35,7 @@ module.exports = {
   resolve: {
     alias: {
       components: path.resolve(__dirname, "src/components/"),
+      routes: path.resolve(__dirname, "src/routes/"),
       react: "preact/compat",
       "react-dom": "preact/compat",
     },
