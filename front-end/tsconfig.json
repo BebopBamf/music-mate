@@ -9,7 +9,13 @@
     "moduleResolution": "node",
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "src",
+    "paths": {
+      "Components": [
+        "components"
+      ]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
