@@ -1,15 +1,16 @@
 import { h, render } from "preact";
 import { Router } from "preact-router";
-import { Home, Messages } from "./routes";
+import { Home, Messages, SignUp } from "./routes";
 
 import "./style.css";
 
-function App() {
+const App = () => {
   return (
-    <div className="w-screen h-screen bg-gray-50 flex flex-col">
+    <div className="flex flex-col w-screen h-screen bg-gray-50">
       <Router>
-        <Messages path="/" />
+        <Home path="/" />
         <Messages path="/messages" />
+        <SignUp path="/signup" />
       </Router>
     </div>
   );

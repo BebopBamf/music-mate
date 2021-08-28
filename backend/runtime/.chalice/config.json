@@ -7,9 +7,10 @@
       "lambda_functions": {
         "api_handler": {
           "environment_variables": {
-            "APP_TABLE_NAME": ""
-	  }
-	}
+            "APP_TABLE_NAME": "",
+            "SPOTIFY_CLIENT_ID": "bebb2a733b624a089d75b4a3d2240112"
+          }
+        }
       }
     }
   }
