@@ -2,7 +2,11 @@ import { createContext, VNode } from "preact";
 import { useContext, useEffect, useState } from "preact/hooks";
 import { Amplify, Auth } from "aws-amplify";
 import { ComponentChildren, FunctionalComponent, h } from "preact";
-import { ISignUpResult } from "amazon-cognito-identity-js";
+import {
+  ISignUpResult,
+  CognitoUser,
+  CognitoUserSession,
+} from "amazon-cognito-identity-js";
 
 interface Props {
   children?: ComponentChildren;
@@ -15,11 +19,16 @@ Amplify.configure({
 });
 
 interface UserContextI {
-  user: any;
+  user: CognitoUser | any;
   login: (uname: string, pwd: string) => any;
   logout: () => void;
   signUp: (props: SignUpPropsI) => Promise<ISignUpResult>;
-  confirmSignUp: (username: string, code: string) => Promise<any>;
+  confirmSignUp: (
+    username: string,
+    tempPassword: string,
+    code: string
+  ) => Promise<any>;
+  getToken: () => string | undefined;
 }
 
 interface SignUpPropsI {
@@ -30,26 +39,63 @@ interface SignUpPropsI {
 const UserContext = createContext<UserContextI | null>(null);
 
 const UserProvider: FunctionalComponent<Props> = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<CognitoUser | null>(null);
+  const [session, setSession] = useState<CognitoUserSession | null>(null);
 
   useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((user) => setUser(user))
       .catch(() => setUser(null));
+    Auth.currentSession()
+      .then((user) => setSession(user))
+      .catch(() => setSession(null));
   }, []);
 
   const login = (usernameOrEmail: string, password: string) =>
-    Auth.signIn(usernameOrEmail, password).then((cognitoUser) =>
-      setUser(cognitoUser)
-    );
+    Auth.signIn(usernameOrEmail, password).then((cognitoUser: CognitoUser) => {
+      setUser(cognitoUser);
+      cognitoUser.getSession((err: any, session: CognitoUserSession) => {
+        if (err) {
+          setSession(null);
+        }
+        setSession(session);
+      });
+    });
   const logout = () => Auth.signOut().then(() => setUser(null));
   const signUp = (props: SignUpPropsI) => Auth.signUp(props);
-  const confirmSignUp = (username: string, code: string) =>
-    Auth.confirmSignUp(username, code);
+  const confirmSignUp = (
+    username: string,
+    tempPassword: string,
+    code: string
+  ) =>
+    new Promise((resolve, reject) =>
+      Auth.confirmSignUp(username, code)
+        .then(() =>
+          Auth.signIn(username, tempPassword).then(
+            (cognitoUser: CognitoUser) => {
+              setUser(cognitoUser);
+              cognitoUser.getSession(
+                (err: any, session: CognitoUserSession) => {
+                  if (err) {
+                    setSession(null);
+                    setUser(null);
+                    reject(err);
+                  }
+                  setSession(session);
+                  resolve(session);
+                }
+              );
+            }
+          )
+        )
+        .catch((err) => reject(err))
+    );
+
+  const getToken = () => session?.getIdToken().getJwtToken();
 
   return (
     <UserContext.Provider
-      value={{ user, login, logout, signUp, confirmSignUp }}
+      value={{ user, login, logout, signUp, confirmSignUp, getToken }}
     >
       {children}
     </UserContext.Provider>
