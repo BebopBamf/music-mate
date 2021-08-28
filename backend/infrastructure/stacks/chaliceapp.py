@@ -1,6 +1,11 @@
 import os
 
-from aws_cdk import aws_dynamodb as dynamodb, core as cdk, aws_cognito as cognito
+from aws_cdk import (
+    aws_dynamodb as dynamodb,
+    core as cdk,
+    aws_cognito as cognito,
+    aws_secretsmanager as secrets,
+)
 from chalice.cdk import Chalice
 
 
@@ -14,6 +19,11 @@ class ChaliceApp(cdk.Stack):
         super().__init__(scope, id, **kwargs)
         self.profile_table = self._create_profile_table_with_inverted()
         self.user_pool = self._create_cognito_user_pool()
+        self.spotify_client_secret = secrets.Secret.from_secret_arn(
+            self,
+            "SpotifyClientSecret",
+            "arn:aws:secretsmanager:ap-southeast-2:837315506606:secret:SpotifyMusicMateClientSecret-eFGs9E",
+        )
         self.chalice = Chalice(
             self,
             "ChaliceApp",
@@ -22,9 +32,11 @@ class ChaliceApp(cdk.Stack):
                 "environment_variables": {
                     "APP_TABLE_NAME": self.profile_table.table_name,
                     "USER_POOL_ARN": self.user_pool.user_pool_arn,
+                    "SPOTIFY_CLIENT_ID": "bebb2a733b624a089d75b4a3d2240112",
                 }
             },
         )
+        self.spotify_client_secret.grant_read(self.chalice.get_role("DefaultRole"))
         self.profile_table.grant_read_write_data(self.chalice.get_role("DefaultRole"))
 
     def _create_profile_table_with_inverted(self):
@@ -59,7 +71,11 @@ class ChaliceApp(cdk.Stack):
                 "sms_message": "Thanks for signing up to our awesome app! Your verification code is {####}",
             },
             sign_in_aliases={"phone": True},
+            standard_attributes={
+                "preferred_username": {"required": True, "mutable": False}
+            },
         )
         cdk.CfnOutput(self, "UserPoolNAME", value="AppUserPool")
         cdk.CfnOutput(self, "UserPoolARN", value=userpool.user_pool_arn)
+
         return userpool
