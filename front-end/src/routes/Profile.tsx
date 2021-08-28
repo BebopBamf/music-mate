@@ -1,15 +1,16 @@
 import { FunctionalComponent, render, h } from "preact";
 import { useState } from "preact/hooks";
-import { ProfileCards, ProfileImage } from "../components/Profile";
+import { ProfileCards, ProfileImage } from "components/Profile";
 import { User } from "data/user";
 import ProfileTitle from "components/Profile/ProfileTitle";
+import { Modal } from "components";
 
 interface Props {
-  guid?: string;
+  id?: string;
   isEditable: boolean;
 }
 
-const Profile: FunctionalComponent<Props> = ({ guid, isEditable }) => {
+const Profile: FunctionalComponent<Props> = ({ id, isEditable }) => {
   const isLoading = false;
 
   const stubUser: User = {
@@ -63,7 +64,7 @@ const Profile: FunctionalComponent<Props> = ({ guid, isEditable }) => {
 
   return (
     <div className="flex flex-col h-full items-center justify-center">
-      <div className="px-4 w-full flex flex-col space-y-8 py-4">
+      <div className="px-4 w-full flex flex-col space-y-6 py-4">
         <ProfileImage
           emoji={profileData.emoji}
           isEditable={isEditable}

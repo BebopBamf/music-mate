@@ -22,7 +22,7 @@ const ProfileCard: FunctionalComponent<Props> = ({
     <div
       className="flex flex-row space-x-4"
       onClick={() => {
-        setIsOpen(true);
+        setIsOpen(isEditable);
       }}
     >
       <div className="h-12 w-12">

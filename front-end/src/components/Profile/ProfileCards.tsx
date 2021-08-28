@@ -21,22 +21,20 @@ const ProfileCards: FunctionalComponent<Props> = ({
   };
 
   return (
-    <div className="mx-4">
-      <ul role="list" className="space-y-3">
-        {songs.map((song, key) => (
-          <li
-            key={key}
-            className="bg-white shadow overflow-hidden rounded-md px-4 py-4"
-          >
-            <CardComponent
-              song={song}
-              isEditable={isEditable}
-              setSong={(song: SongData) => handleSetSong(song, key)}
-            />
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul role="list" className="space-y-3">
+      {songs.map((song, key) => (
+        <li
+          key={key}
+          className="bg-white shadow overflow-hidden rounded-md px-4 py-4"
+        >
+          <CardComponent
+            song={song}
+            isEditable={isEditable}
+            setSong={(song: SongData) => handleSetSong(song, key)}
+          />
+        </li>
+      ))}
+    </ul>
   );
 };
 

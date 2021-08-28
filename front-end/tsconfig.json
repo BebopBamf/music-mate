@@ -16,6 +16,9 @@
     "paths": {
       "components": [
         "components"
+      ],
+      "routes": [
+        "routes"
       ]
     }
   },
