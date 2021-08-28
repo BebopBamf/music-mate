@@ -1,5 +1,7 @@
 import os
+from backend.runtime.chalicelib.Song import Song
 import boto3
+from dataclasses import dataclass
 import datetime
 from chalice import Chalice
 from chalice.app import (
@@ -8,6 +10,7 @@ from chalice.app import (
     NotFoundError,
     Response,
 )
+import json
 import requests
 
 
@@ -36,6 +39,115 @@ def get_base_url(current_request):
     return base_url
 
 
+# _____matt's usage_______
+# const song = {
+# uri
+#     title: "The Lazy song",
+#     artist: "Bruno Mars",
+#     explicit: true,
+#     duration: 190213,
+#     imageUrl:
+#       "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+#   };
+
+songA = Song(
+    "spotify:track:3dDTVzIF6s7EyU6NoviFwD",
+    "When I needed you",
+    "Carly Rae Jepsen",
+    True,
+    290213,
+    "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+)
+songJ = {
+    "uri": "spotify:track:3dDTVzIF6s7EyU6NoviFwD",
+    "title": "When I needed you",
+    "artist": "Carly Rae Jepsen",
+    "explicit": True,
+    "duration": 290213,
+    "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+}
+
+# TODO: change songs to messgaes, stub data for stuff, types for songs?
+@app.route("/profile", methods=["GET"])
+def get_my_profile():
+    return [
+        {
+            "profileid": "13db5e8e-e4b8-4590-ac3c-654419dcead5",
+            "emoji": "🍎",
+            "name": "David",
+            "location": {"city": "Sydney", "cityEmoji": "🇦🇺"},
+            "following": False,
+            "songs": [
+                # json.dumps(dataclass.asdict(songA)),
+                {
+                    "uri": "spotify:track:1ExfPZEiahqhLyajhybFeS",
+                    "title": "The Lazy song",
+                    "artist": "Bruno Mars",
+                    "explicit": True,
+                    "duration": 190213,
+                    "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+                },
+            ],
+        }
+    ]
+
+
+@app.route("/profile/{id}", methods=["GET"])
+def get_profile_by_id(id):
+    return [
+        {
+            "profileid": "13db5e8e-e4b8-4590-ac3c-654419dcead5",
+            "emoji": "🍎",
+            "name": "David",
+            "location": {"city": "Sydney", "cityEmoji": "🇦🇺"},
+            "following": False,
+            "songs": [
+                {
+                    "uri": "spotify:track:3dDTVzIF6s7EyU6NoviFwD",
+                    "title": "When I needed you",
+                    "artist": "Carly Rae Jepsen",
+                    "explicit": True,
+                    "duration": 290213,
+                    "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+                },
+                {
+                    "uri": "spotify:track:1ExfPZEiahqhLyajhybFeS",
+                    "title": "The Lazy song",
+                    "artist": "Bruno Mars",
+                    "explicit": True,
+                    "duration": 190213,
+                    "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+                },
+            ],
+        }
+    ]
+
+
+@app.route("/profile/{id}/follow", methods=["POST"])
+def follow_profile_by_id(id):
+    # do stuff
+    pass
+
+
+@app.route("/profile/recent", methods=["GET"])
+def get_my_recent_songs():
+    return [
+        {
+            "song": {
+                "uri": "spotify:track:1ExfPZEiahqhLyajhybFeS",
+                "title": "The Lazy song",
+                "artist": "Bruno Mars",
+                "explicit": True,
+                "duration": 190213,
+                "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+            }
+        }
+    ]
+
+
+# Song(uri, ...).toJson()
+
+
 @app.route("/chats", methods=["GET"])
 def list_chats():
     return [
@@ -45,7 +157,7 @@ def list_chats():
             "name": "David",
             "lastTrack": {
                 "uri": "spotify:track:3dDTVzIF6s7EyU6NoviFwD",
-                "name": "When I needed you",
+                "title": "When I needed you",
                 "artist": "Carly Rae Jepsen",
             },
         },
@@ -55,8 +167,11 @@ def list_chats():
             "name": "Matthew",
             "lastTrack": {
                 "uri": "spotify:track:1ExfPZEiahqhLyajhybFeS",
-                "name": "The Lazy Song",
+                "title": "The Lazy song",
                 "artist": "Bruno Mars",
+                "explicit": True,
+                "duration": 190213,
+                "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
             },
         },
     ]
@@ -72,23 +187,33 @@ def get_chat_by_id(chatid):
                 "location": "Sydney",
                 "location_emoji": "🇦🇺",
             },
-            "songs": [
+            "messages": [
                 {
                     "recipient": False,
                     "sent": datetime.datetime(2021, 8, 29, 22, 0).isoformat(),
                     "type": "basic",
-                    "uri": "spotify:track:1ExfPZEiahqhLyajhybFeS",
-                    "name": "The Lazy Song",
-                    "artist": "Bruno Mars",
+                    "song": {
+                        "uri": "spotify:track:1ExfPZEiahqhLyajhybFeS",
+                        "title": "The Lazy song",
+                        "artist": "Bruno Mars",
+                        "explicit": True,
+                        "duration": 190213,
+                        "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+                    },
                 },
                 {
                     "recipient": True,
                     "sent": datetime.datetime(2021, 8, 29, 22, 30).isoformat(),
                     "type": "emoji",
                     "emoji": "❤️",
-                    "uri": "spotify:track:3dDTVzIF6s7EyU6NoviFwD",
-                    "name": "When I needed you",
-                    "artist": "Carly Rae Jepsen",
+                    "song": {
+                        "uri": "spotify:track:3dDTVzIF6s7EyU6NoviFwD",
+                        "title": "When I needed you",
+                        "artist": "Carly Rae Jepsen",
+                        "explicit": True,
+                        "duration": 290213,
+                        "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+                    },
                 },
             ],
         }
@@ -100,23 +225,33 @@ def get_chat_by_id(chatid):
                 "location": "Sydney",
                 "location_emoji": "🇦🇺",
             },
-            "songs": [
+            "messages": [
                 {
                     "recipient": True,
                     "sent": datetime.datetime(2021, 8, 29, 21, 30).isoformat(),
                     "type": "emoji",
                     "emoji": "🍆",
-                    "uri": "spotify:track:70Vdd1gx5tn84jkAU31ASv",
-                    "name": "Sexy and I Know It",
-                    "artist": "LMFAO",
+                    "song": {
+                        "uri": "spotify:track:70Vdd1gx5tn84jkAU31ASv",
+                        "title": "Sexy and I Know It",
+                        "artist": "LMFAO",
+                        "explicit": True,
+                        "duration": 290213,
+                        "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+                    },
                 },
                 {
                     "recipient": False,
                     "sent": datetime.datetime(2021, 8, 29, 22, 0).isoformat(),
                     "type": "basic",
-                    "uri": "spotify:track:1ExfPZEiahqhLyajhybFeS",
-                    "name": "The Lazy Song",
-                    "artist": "Bruno Mars",
+                    "song": {
+                        "uri": "spotify:track:3dDTVzIF6s7EyU6NoviFwD",
+                        "title": "When I needed you",
+                        "artist": "Carly Rae Jepsen",
+                        "explicit": True,
+                        "duration": 290213,
+                        "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+                    },
                 },
             ],
         }
@@ -145,16 +280,25 @@ def search_songs():
                 "uri": "spotify:track:4fK6E2UywZTJIa5kWnCD6x",
                 "name": "Friday",
                 "artist": "Rebecca Black",
+                "explicit": True,
+                "duration": 290213,
+                "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
             },
             {
                 "uri": "spotify:track:4fK6E2UywZTJIa5kWnCD6x",
                 "name": "Friday",
                 "artist": "Rebecca Black",
+                "explicit": True,
+                "duration": 290213,
+                "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
             },
             {
                 "uri": "spotify:track:4fK6E2UywZTJIa5kWnCD6x",
                 "name": "Friday",
                 "artist": "Rebecca Black",
+                "explicit": True,
+                "duration": 290213,
+                "imageUrl": "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
             },
         ],
     }
