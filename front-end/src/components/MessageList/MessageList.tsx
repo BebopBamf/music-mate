@@ -8,8 +8,6 @@ interface Props {
   children?: ComponentChildren;
 }
 
-
-
 const MessageList: FunctionalComponent<Props> = (props: Props) => {
   const fetchSongDataStub = map(_ => ({ name: "Matt", location: "Sydney", songName: "The Lazy Song", songArtist: "Bruno Mars" }))(Array(10).fill(0));
 
