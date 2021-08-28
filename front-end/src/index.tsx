@@ -9,12 +9,12 @@ const App = () => {
   return (
     <div className="flex flex-col w-screen h-screen bg-gray-50">
       <UserProvider>
-      <Router>
-        <Home path="/" />
-        <Messages path="/messages" />
-        <SignUp path="/signup" />
-        <Profile path="/profile" />
-      </Router>
+        <Router>
+          <Home path="/" />
+          <Messages path="/messages" />
+          <SignUp path="/signup" />
+          <Profile path="/profile" isEditable={true} />
+        </Router>
       </UserProvider>
     </div>
   );

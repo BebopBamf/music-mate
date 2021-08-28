@@ -1,2 +1,3 @@
-export { default as ProfileTitleBar } from './title-bar';
-export { default as ProfileCardsList } from './cards-list';
+export { default as ProfileCards } from "./ProfileCards";
+export { default as ProfileImage } from "./ProfileImage";
+export { default as ProfileLocation } from "./ProfileTitle";

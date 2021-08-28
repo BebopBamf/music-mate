@@ -1,79 +1,86 @@
-import { ComponentChildren, FunctionalComponent, render, h } from "preact";
+import { FunctionalComponent, render, h } from "preact";
 import { useState } from "preact/hooks";
-import { ProfileTitleBar, ProfileCardsList } from "../components";
-import { map } from "lodash/fp";
-import { User } from 'data/user';
+import { ProfileCards, ProfileImage } from "../components/Profile";
+import { User } from "data/user";
+import ProfileTitle from "components/Profile/ProfileTitle";
 
 interface Props {
-  children?: ComponentChildren;
   guid?: string;
+  isEditable: boolean;
 }
 
-const Profile: FunctionalComponent<Props> = ({ guid }) => {
+const Profile: FunctionalComponent<Props> = ({ guid, isEditable }) => {
   const isLoading = false;
-  
+
   const stubUser: User = {
-    guid: '1111111-111111-11111-111',
-    name: 'Euan Mendoza',
-    emoji: '🍆',
+    guid: "1111111-111111-11111-111",
+    name: "Euan Mendoza",
+    emoji: "🍆",
     location: {
-      locale: 'en_AU.UTF-8',
-      name: 'Sydney, Australia',
-      emoji: '🇦🇺'
+      locale: "en_AU.UTF-8",
+      city: "Sydney",
+      country: "Australia",
+      emoji: "🇦🇺",
     },
-    lastPlayed: {
-      uri: '',
-      title: 'The Lazy Song',
-      artist: 'Bruno Mars',
-      explicit: false,
-      duration: 10323,
-      image: ''
-    },
-    favouriteSongs: {
-      first: {
-        uri: '',
-        title: 'Untitled',
-        artist: "D'Angelo",
+    songs: [
+      {
+        uri: "",
+        title: "The Lazy song skjdlghdfjklhgdfjkghdkfjhdfkjhgkfj",
+        artist: "Bruno Mars",
         explicit: true,
-        duration: 1232,
-        image: '',
+        duration: 190213,
+        image:
+          "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
       },
-      second: {
-        uri: '',
-        title: 'Betray My Heart',
-        artist: `D'Angelo`,
+      {
+        uri: "",
+        title: "The Crazy song skjdlghdfjklhgdfjkghdkfjhdfkjhgkfj",
+        artist: "Bruno Mars",
         explicit: true,
-        duration: 12323,
-        image: '',
+        duration: 190213,
+        image:
+          "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
       },
-      third: undefined,
-    },
-    followingUser: ['123232132'],
+      {
+        uri: "",
+        title: "The Lazy song skjdlghdfjklhgdfjkghdkfjhdfkjhgkfj",
+        artist: "Bruno Mars",
+        explicit: true,
+        duration: 190213,
+        image:
+          "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
+      },
+    ],
   };
 
   const [profileData, setProfileData] = useState(stubUser);
-  const [cardData, setCardData] = useState([]);
 
-  const { name, emoji, location, favouriteSongs } = profileData;
+  const { name, emoji, location, songs } = profileData;
+
+  const saveProfile = () => {
+    //TODO: SAVE DATA TO SERVER
+  };
 
   return (
-    <div class="px-4 h-screen flex flex-col space-y-4 py-4">
-      <ProfileTitleBar
-        profName={name}
-        emoji={emoji}
-        location={`${location.name} ${location.emoji}`}
-      />
-
-      <div class="items-center">
-        <button class="bg-indigo-600 shadow rounded text-white px-4 py-2 sm:p-6">
-          Follow
-        </button>
-        <button class="bg-indigo-600 shadow rounded text-white px-4 py-2 sm:p-6">
-          Play Pal
-        </button>
+    <div className="flex flex-col h-full items-center justify-center">
+      <div className="px-4 w-full flex flex-col space-y-8 py-4">
+        <ProfileImage
+          emoji={profileData.emoji}
+          isEditable={isEditable}
+          setNewEmoji={(emoji) =>
+            setProfileData((currentUserData) => ({
+              ...currentUserData,
+              emoji: emoji,
+            }))
+          }
+        />
+        <ProfileTitle name={name} location={location} isEditable={isEditable} />
+        <ProfileCards
+          songs={songs}
+          setSongs={() => {}}
+          isEditable={isEditable}
+        />
       </div>
-
-      <ProfileCardsList favouriteSongs={favouriteSongs} />
     </div>
   );
 };
