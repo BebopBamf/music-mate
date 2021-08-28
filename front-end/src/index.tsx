@@ -1,6 +1,6 @@
 import { h, render } from "preact";
 import { Router } from "preact-router";
-import { Home, SignUp } from "./routes";
+import { Home, Profile, SignUp } from "./routes";
 
 import "./style.css";
 
