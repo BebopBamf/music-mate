@@ -19,7 +19,6 @@ const MessageList: FunctionalComponent<Props> = (props: Props) => {
   const transformSongData = fp.map((data: SongData) => (<MessageListItem data={data} />));
 
   const [songDatas, setSongDatas] = useState(fetchSongDataStub);
-  console.log(songDatas);
 
   return (
     <ul role="list" className="divide-y divide-gray-200 overflow-y-scroll">

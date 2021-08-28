@@ -1,6 +1,6 @@
 import { h, render } from "preact";
 import { Router } from "preact-router";
-import { Home, Messages, SignUp } from "./routes";
+import { Home, Messages, Profile, SignUp } from "./routes";
 
 import "./style.css";
 
@@ -11,6 +11,7 @@ const App = () => {
         <Home path="/" />
         <Messages path="/messages" />
         <SignUp path="/signup" />
+        <Profile path="/profile" />
       </Router>
     </div>
   );
