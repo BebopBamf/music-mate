@@ -13,6 +13,7 @@ interface Props {
 }
 
 import cognito from "../config/cognito";
+import { BASE_URL } from "../config/api";
 
 Amplify.configure({
   ...cognito,
@@ -73,7 +74,6 @@ const UserProvider: FunctionalComponent<Props> = ({ children }) => {
         .then(() =>
           Auth.signIn(username, tempPassword).then(
             (cognitoUser: CognitoUser) => {
-              setUser(cognitoUser);
               cognitoUser.getSession(
                 (err: any, session: CognitoUserSession) => {
                   if (err) {
@@ -81,7 +81,14 @@ const UserProvider: FunctionalComponent<Props> = ({ children }) => {
                     setUser(null);
                     reject(err);
                   }
+                  setUser(cognitoUser);
                   setSession(session);
+                  fetch(BASE_URL + "/create_profile", {
+                    method: "PUT",
+                    headers: {
+                      Authorization: session.getIdToken().getJwtToken(),
+                    },
+                  });
                   resolve(session);
                 }
               );
