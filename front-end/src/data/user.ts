@@ -10,9 +10,15 @@ export interface User {
   songs: SongData[];
 }
 
+export interface ProfileData {
+  profileid: Guid;
+  emoji: string;
+  name: string;
+  location: Location;
+  songs: SongData[]
+}
+
 export interface Location {
-  locale: string;
   city: string;
-  country: string;
   emoji: string;
 }

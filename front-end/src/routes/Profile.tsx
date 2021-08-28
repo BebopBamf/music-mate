@@ -1,7 +1,8 @@
 import { FunctionalComponent, render, h } from "preact";
 import { useState } from "preact/hooks";
+import useSWR from "swr";
 import { ProfileCards, ProfileImage } from "../components/Profile";
-import { User, Guid } from "data/user";
+import { User, ProfileData, Guid } from "data/user";
 import ProfileTitle from "components/Profile/ProfileTitle";
 
 interface Props {
@@ -9,19 +10,62 @@ interface Props {
   isEditable: boolean;
 }
 
+interface ProfileContentProps {
+  user: ProfileData;
+  isEditable: boolean;
+}
+
+
+const ProfileContent: FunctionalComponent<ProfileContentProps> = ({ isEditable, user}) => {
+  const [profileData, setProfileData] = useState(user);
+  
+  const { name, emoji, location, songs } = profileData;
+ 
+  const saveProfile = () => {
+    //TODO: SAVE DATA TO SERVER
+  };
+
+  return (
+    <div className="flex flex-col h-full items-center justify-center">
+      <div className="px-4 w-full flex flex-col space-y-8 py-4">
+        <ProfileImage
+          emoji={emoji}
+          isEditable={isEditable}
+          setNewEmoji={(emoji) =>
+            setProfileData((currentUserData) => ({
+              ...currentUserData,
+              emoji: emoji,
+            }))
+          }
+        />
+        <ProfileTitle name={name} location={location} isEditable={isEditable} />
+        <ProfileCards
+          songs={songs}
+          setSongs={() => {}}
+          isEditable={isEditable}
+        />
+      </div>
+    </div>
+  );
+}
+
 const Profile: FunctionalComponent<Props> = ({ guid, isEditable }) => {
-  console.log(`GUID: ${guid}`);
+  if (guid) {
+    const { data, error } = useSWR(`/profile/${guid}`);
 
-  const isLoading = false;
+    if (error) return <h1>Failure!</h1>;
 
-  const stubUser: User = {
-    guid: "1111111-111111-11111-111",
+    if (!data) return <h1>Loading...</h1>;
+
+    return <ProfileContent isEditable={false} user={data} />
+  }
+  
+  const stubUser: ProfileData = {
+    profileid: "1111111-111111-11111-111",
     name: "Euan Mendoza",
     emoji: "🍆",
     location: {
-      locale: "en_AU.UTF-8",
       city: "Sydney",
-      country: "Australia",
       emoji: "🇦🇺",
     },
     songs: [
@@ -55,36 +99,8 @@ const Profile: FunctionalComponent<Props> = ({ guid, isEditable }) => {
     ],
   };
 
-  const [profileData, setProfileData] = useState(stubUser);
-
-  const { name, emoji, location, songs } = profileData;
-
-  const saveProfile = () => {
-    //TODO: SAVE DATA TO SERVER
-  };
-
-  return (
-    <div className="flex flex-col h-full items-center justify-center">
-      <div className="px-4 w-full flex flex-col space-y-8 py-4">
-        <ProfileImage
-          emoji={profileData.emoji}
-          isEditable={isEditable}
-          setNewEmoji={(emoji) =>
-            setProfileData((currentUserData) => ({
-              ...currentUserData,
-              emoji: emoji,
-            }))
-          }
-        />
-        <ProfileTitle name={name} location={location} isEditable={isEditable} />
-        <ProfileCards
-          songs={songs}
-          setSongs={() => {}}
-          isEditable={isEditable}
-        />
-      </div>
-    </div>
-  );
+  
+  return <ProfileContent isEditable={true} user={stubUser} />
 };
 
 export default Profile;
