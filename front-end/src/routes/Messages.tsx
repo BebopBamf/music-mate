@@ -3,20 +3,49 @@ import {
   MessagesFooter,
   MessagesHeader,
 } from "components/Messages";
-import { SongSelector } from "components";
+import { SongPicker } from "components";
 import { FunctionalComponent } from "preact";
 import { useState } from "preact/hooks";
+import EmojiPicker from "components/EmojiPicker/EmojiPicker";
 
 const Messages: FunctionalComponent = () => {
-  const [open, setOpen] = useState(true);
+  const [isSongPickerOpen, setIsSongPickerOpen] = useState(false);
+  const [selectedSong, setSelectedSong] = useState("");
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState("");
 
   return (
     <div className="h-screen w-screen flex flex-col">
       <MessagesHeader />
       <MessagesBody />
+      <button
+        onClick={() => {
+          setIsSongPickerOpen(true);
+        }}
+      >
+        Open Song Picker
+      </button>
+      <button
+        onClick={() => {
+          setIsEmojiPickerOpen(true);
+        }}
+      >
+        Open Emoji Picker
+      </button>
       <MessagesFooter />
-      <button onClick={() => setOpen((prevState) => !prevState)}>CLICK</button>
-      <SongSelector open={open} setOpen={(value: boolean) => setOpen(value)} />
+      <SongPicker
+        isOpen={isSongPickerOpen}
+        setIsOpen={(value: boolean) => setIsSongPickerOpen(value)}
+        setSelectedSong={(value: string) => setSelectedSong(value)}
+      />
+      <EmojiPicker
+        isOpen={isEmojiPickerOpen}
+        setIsOpen={(value: boolean) => setIsEmojiPickerOpen(value)}
+        currentSelection={selectedEmoji}
+        setCurrentSelection={(emoji: string) => {
+          setSelectedEmoji(emoji);
+        }}
+      />
     </div>
   );
 };

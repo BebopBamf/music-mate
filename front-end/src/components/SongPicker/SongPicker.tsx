@@ -5,11 +5,12 @@ import { Fragment, FunctionalComponent, h } from "preact";
 import { useState } from "preact/hooks";
 
 interface Props {
-  open: boolean;
-  setOpen: (value: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+  setSelectedSong: (value: string) => void;
 }
 
-const SongSelector: FunctionalComponent<Props> = (props: Props) => {
+const SongPicker: FunctionalComponent<Props> = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -89,7 +90,7 @@ const SongSelector: FunctionalComponent<Props> = (props: Props) => {
   ];
 
   return (
-    <SlideUp open={props.open} setOpen={props.setOpen}>
+    <SlideUp isOpen={props.isOpen} setIsOpen={props.setIsOpen}>
       <div className="w-full flex flex-col pt-6 bg-gray-100 shadow-2xl rounded-t-2xl">
         <div className="flex flex-row space-x-2 px-4 mb-6">
           <input
@@ -104,7 +105,7 @@ const SongSelector: FunctionalComponent<Props> = (props: Props) => {
             <button
               type="button"
               className="h-full w-full flex items-center justify-center text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              onClick={() => props.setOpen(false)}
+              onClick={() => props.setIsOpen(false)}
             >
               <span className="sr-only">Close panel</span>
               <Close />
@@ -141,4 +142,4 @@ const SongSelector: FunctionalComponent<Props> = (props: Props) => {
   );
 };
 
-export default SongSelector;
+export default SongPicker;
