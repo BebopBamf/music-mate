@@ -23,12 +23,19 @@
     "typescript": "^4.3.5",
     "webpack": "^5.47.1",
     "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/preset-typescript": "^7.6.0",
+    "babel-loader": "^8.0.6"
   },
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.14.9",
     "@headlessui/react": "^1.4.0",
     "@heroicons/react": "^1.0.4",
     "@tailwindcss/aspect-ratio": "^0.2.1",
+    "amazon-cognito-identity-js": "^5.1.0",
     "aws-amplify": "^4.2.5",
     "lodash": "^4.17.21",
     "preact": "^10.5.14",
