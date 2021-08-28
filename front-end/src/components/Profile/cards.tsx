@@ -1,11 +1,13 @@
 import { ComponentChildren, FunctionalComponent, h } from "preact";
+import { SongData } from 'data/song';
 
 interface Props {
   children?: ComponentChildren;
   num: number;
+  song: SongData;
 }
 
-const CardComponent: FunctionalComponent<Props> = ({ num }: Props) => {
+const CardComponent: FunctionalComponent<Props> = ({ num, song }: Props) => {
   return (
     <div>
       <div>

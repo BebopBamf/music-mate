@@ -36,8 +36,6 @@ const SongCard = ({ song }: SongCardProps) => {
 const MessageListItem: FunctionalComponent<Props> = ({ user }: Props) => {
   const { name, emoji, location, lastPlayed } = user;
   
-  // const { name, location, songName, songArtist }: User= data;
-
   const formatLocation = (location: Location) => {
     const { name, emoji } = location;
 
