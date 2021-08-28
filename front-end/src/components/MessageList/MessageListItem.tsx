@@ -2,15 +2,20 @@ import { ComponentChildren, FunctionalComponent, h } from "preact";
 import { UserIcon, Badge } from "components/Common";
 import { ChevronRight, MusicNote } from "components/Common/Icons";
 
-interface Props {
-  children?: ComponentChildren;
+export interface SongData {
+  name: String;
+  location: String;
+  songName: String;
+  songArtist: String;
 }
 
-const MessageListItem: FunctionalComponent<Props> = (props: Props) => {
-  const name = "Matt";
-  const location = "Sydney";
-  const songName = "The Lazy Song";
-  const songArtist = "Bruno Mars";
+export interface MessageListItemProps {
+  children?: ComponentChildren;
+  data: SongData
+}
+
+const MessageListItem: FunctionalComponent<MessageListItemProps> = ({ data }: MessageListItemProps) => {
+  const { name, location, songName, songArtist }: SongData = data;
 
   return (
     <a href="#">

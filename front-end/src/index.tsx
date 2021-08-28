@@ -4,7 +4,7 @@ import { Home } from "./routes";
 
 import "./style.css";
 
-function App() {
+const App = () => {
   return (
     <div className="w-screen h-screen bg-gray-50 flex flex-col">
       <Router>
