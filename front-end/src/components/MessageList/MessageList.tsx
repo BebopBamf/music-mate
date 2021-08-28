@@ -1,7 +1,8 @@
 import { ComponentChildren, FunctionalComponent, h } from "preact";
 import { useState } from 'preact/hooks';
-import * as fp from "lodash/fp";
-import MessageListItem, { SongData, MessageListItemProps } from "./MessageListItem";
+import { map } from "lodash/fp";
+import MessageListItem, { MessageListItemProps } from "./MessageListItem";
+import { SongData } from "data/song";
 
 interface Props {
   children?: ComponentChildren;
@@ -10,13 +11,9 @@ interface Props {
 
 
 const MessageList: FunctionalComponent<Props> = (props: Props) => {
-  const fetchSongDataStub = () => {
-    return fp.map(_x => {
-      return { name: "Matt", location: "Sydney", songName: "The Lazy Song", songArtist: "Bruno Mars" }
-    })(Array(10).fill(0));
-  };
+  const fetchSongDataStub = map(_ => ({ name: "Matt", location: "Sydney", songName: "The Lazy Song", songArtist: "Bruno Mars" }))(Array(10).fill(0));
 
-  const transformSongData = fp.map((data: SongData) => (<MessageListItem data={data} />));
+  const transformSongData = map((data: SongData) => (<MessageListItem data={data} />));
 
   const [songDatas, setSongDatas] = useState(fetchSongDataStub);
 
