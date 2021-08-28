@@ -1,6 +1,8 @@
 export interface SongData {
-  name: String;
-  location: String;
-  songName: String;
-  songArtist: String;
+  uri: string;
+  title: string;
+  artist: string;
+  explicit: boolean;
+  duration: number;
+  image: string;
 }
