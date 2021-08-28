@@ -4,7 +4,7 @@ import {
   MessagesHeader,
 } from "components/Messages";
 import { SongPicker } from "components";
-import { FunctionalComponent } from "preact";
+import { FunctionalComponent, h } from "preact";
 import { useState } from "preact/hooks";
 import EmojiPicker from "components/EmojiPicker/EmojiPicker";
 
