@@ -3,14 +3,9 @@ import { h, render } from "preact";
 import { Router } from "preact-router";
 import { Home, Messages, Profile, SignUp } from "./routes";
 import { SWRConfig } from "swr";
+import { fetcher } from "./config/api";
 
 import "./style.css";
-
-const baseUrl =
-  "https://7a9ot7v4s0.execute-api.ap-southeast-2.amazonaws.com/api";
-
-const fetcher = (uri: string, opts: object) =>
-  fetch(baseUrl + uri, opts).then((res) => res.json());
 
 const App = () => {
   return (
