@@ -6,8 +6,6 @@ import { Transition } from "@headlessui/react";
 import { Spinner } from "components/Common/Icons";
 
 const Home: FunctionalComponent = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalLoading, setIsModalLoading] = useState<boolean>(false);
   const [matchedProfileId, setMatchedProfileId] = useState<string>("");

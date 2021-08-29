@@ -5,6 +5,8 @@ import { Fragment, FunctionalComponent, h } from "preact";
 import { useState } from "preact/hooks";
 import SongPickerResult from "./SongPickerResult";
 import { debounce } from "lodash";
+import useSWR from "swr";
+import { any } from "lodash/fp";
 
 interface Props {
   isOpen: boolean;
@@ -17,8 +19,11 @@ const SongPicker: FunctionalComponent<Props> = ({
   setIsOpen,
   setSelectedSong,
 }: Props) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const { data, error } = useSWR("/search/" + searchQuery);
+
+  console.log(data);
 
   const updateSong = (e: Event) => {
     const inputField = e.target as HTMLInputElement;
@@ -27,32 +32,56 @@ const SongPicker: FunctionalComponent<Props> = ({
     console.log(searchQuery);
   };
 
-  const songs = [
-    {
-      uri: "",
-      title: "The Lazy song skjdlghdfjklhgdfjkghdkfjhdfkjhgkfj",
-      artist: "Bruno Mars",
-      explicit: true,
-      duration: 190213,
-      image: "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
-    },
-    {
-      uri: "",
-      title: "The Lazy song skjdlghdfjklhgdfjkghdkfjhdfkjhgkfj",
-      artist: "Bruno Mars",
-      explicit: true,
-      duration: 190213,
-      image: "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
-    },
-    {
-      uri: "",
-      title: "The Lazy song skjdlghdfjklhgdfjkghdkfjhdfkjhgkfj",
-      artist: "Bruno Mars",
-      explicit: true,
-      duration: 190213,
-      image: "https://i.scdn.co/image/ab67616d0000485178c6c624a95d1bd02ba1fa02",
-    },
-  ];
+  interface SearchProps {
+    data: any;
+    error: any;
+  }
+
+  const SearchResults: FunctionalComponent<SearchProps> = ({
+    data,
+    error,
+  }: SearchProps) => {
+    if (error) {
+      return <p>Error Fetching Songs</p>;
+    }
+
+    if (!data)
+      return (
+        <div className="overflow-y-scroll bg-gray-50 flex-1 pb-4">
+          <ul role="list" className="flex flex-col py-4 space-y-4 mx-4">
+            <li className="shadow overflow-hidden rounded-md px-4 py-4 h-20 bg-white flex flex-row">
+              <div className="h-12 w-12 block" />
+              <div className="pl-4 flex-1 flex flex-col truncate">
+                <div className="flex flex-row items-center space-x-2 truncate flex-shrink-0 ">
+                  <div className="truncate flex-1 font-bold">xxxx</div>
+                  <div className="truncate flex-shrink-0">xxx</div>
+                </div>
+                <div className="flex flex-row items-center space-x-2 truncate flex-shrink-0">
+                  <div className="truncate flex-1">xxxxx</div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      );
+
+    return (
+      <div className="overflow-y-scroll bg-gray-50 flex-1 pb-4">
+        <ul role="list" className="flex flex-col py-4 space-y-4 mx-4">
+          {data.map((song: any, key: number) => (
+            <SongPickerResult
+              song={song}
+              key={key}
+              onClick={(song: SongData) => {
+                setSelectedSong(song);
+                setIsOpen(false);
+              }}
+            />
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
   return (
     <SlideUp isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -82,20 +111,7 @@ const SongPicker: FunctionalComponent<Props> = ({
             </button>
           </div>
         </div>
-        <div className="overflow-y-scroll bg-gray-50 flex-1 pb-4">
-          <ul role="list" className="flex flex-col py-4 space-y-4 mx-4">
-            {songs.map((song, key) => (
-              <SongPickerResult
-                song={song}
-                key={key}
-                onClick={(song: SongData) => {
-                  setSelectedSong(song);
-                  setIsOpen(false);
-                }}
-              />
-            ))}
-          </ul>
-        </div>
+        <SearchResults data={data} error={error} />
       </div>
     </SlideUp>
   );
