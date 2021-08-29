@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "https://7a9ot7v4s0.execute-api.ap-southeast-2.amazonaws.com/api";
 
 const fetcher = (uri: string, opts: object, token: string = "") => {
   const headers = new Headers();

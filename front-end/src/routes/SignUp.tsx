@@ -54,7 +54,7 @@ const SignUp: FunctionalComponent = () => {
       label: "Enter your phone number",
       type: "tel",
       placeholder: "+XX XXXXXXXXX",
-      pattern: /^[0-9+\s]{8,12}$/,
+      pattern: /^[0-9+\s]{8,13}$/,
       next: (
         event: JSXInternal.TargetedEvent<HTMLFormElement, Event>,
         validate: RegExp
