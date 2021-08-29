@@ -1,26 +1,17 @@
 {
   "compilerOptions": {
+    "target": "es5",
     "outDir": "./dist/",
     "sourceMap": true,
+    "noEmit": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "jsx": "react",
     "strict": true,
     "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "es5",
-    "allowJs": true,
-    "moduleResolution": "node",
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact",
-    "noEmit": true,
-    "skipLibCheck": true,
-    "baseUrl": "src",
-    "paths": {
-      "components": [
-        "components"
-      ],
-      "routes": [
-        "routes"
-      ]
-    }
   },
   "include": [
     "src/**/*"

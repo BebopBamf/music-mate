@@ -1,32 +1,51 @@
-import { UserProvider } from "./context/UserContext";
-import { h, render } from "preact";
-import { Router } from "preact-router";
-import { Home, Messages, Profile, SignUp } from "./routes";
-import { SWRConfig } from "swr";
-import { fetcher } from "./config/api";
+import React from 'react';
+import { render } from 'react-dom';
+import {
+  Switch,
+  Route
+} from 'react-router-dom';
+import Home from './routes/home';
+import { SWRConfig } from 'swr';
+import { fetcher } from './config/api';
 
 import "./style.css";
 
-const App = () => {
-  return (
+const App = () => (
     <div className="flex flex-col w-screen h-screen bg-gray-50">
-      <UserProvider>
         <SWRConfig
-          value={{
-            fetcher: fetcher,
-          }}
+            value={{
+                fetcher: fetcher,
+            }}
         >
-          <Router>
-            <Home path="/" />
-            <Messages path="/messages/:guid" />
-            <SignUp path="/signup" />
-            <Profile path="/profile" isEditable={true} />
-            <Profile path="/profile/:guid" isEditable={false} />
-          </Router>
+          
+            <Switch>
+                <Route path="/">
+                    <Home />
+                </Route>
+
+                {/*
+                
+                <Route path="/signup">
+                    <SignUp path="/signup" />
+                </Route>
+
+                <Route path="/messages/:guid">
+                    <Messages />
+                </Route>
+
+                <Route path="/profile">
+                    <Profile path="/profile" />
+                </Route>
+
+                <Route path="/profile/:guid">
+                    <Profile path="/profile/:guid" />
+                </Route>
+                */}
+
+            </Switch>
+        
         </SWRConfig>
-      </UserProvider>
     </div>
-  );
-};
+);
 
 render(<App />, document.body);
