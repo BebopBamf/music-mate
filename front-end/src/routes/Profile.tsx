@@ -29,32 +29,32 @@ const Profile: FunctionalComponent<Props> = ({ guid, isEditable }) => {
 
   if (!data)
     return (
-      <div className="animate-pulse flex flex-col h-full items-center justify-center">
-        <div className="px-4 w-full flex flex-col space-y-6 py-4">
-          <div className="w-full flex items-center justify-center">
+      <div className="flex flex-col items-center justify-center h-full animate-pulse">
+        <div className="flex flex-col w-full px-4 py-4 space-y-6">
+          <div className="flex items-center justify-center w-full">
             <div class="bg-gray-200 font-emoji w-36 h-36 rounded-full shadow-xl"></div>
           </div>
           <div className="flex flex-col items-center">
-            <div className="bg-gray-200 w-1/3 h-8 block mb-1">d</div>
-            <div className="bg-gray-200 w-1/2 h-6 block" />
+            <div className="block w-1/3 h-8 mb-1 bg-gray-200">d</div>
+            <div className="block w-1/2 h-6 bg-gray-200" />
           </div>
           <ul role="list" className="space-y-3">
-            <li className="bg-white shadow overflow-hidden rounded-md px-4 py-4">
+            <li className="px-4 py-4 overflow-hidden bg-white rounded-md shadow">
               <div className="flex flex-row space-x-4">
-                <div className="h-12 w-12 block bg-gray-200 flex-shrink-0" />
-                <div className="h-12 w-full block bg-gray-200" />
+                <div className="flex-shrink-0 block w-12 h-12 bg-gray-200" />
+                <div className="block w-full h-12 bg-gray-200" />
               </div>
             </li>
-            <li className="bg-white shadow overflow-hidden rounded-md px-4 py-4">
+            <li className="px-4 py-4 overflow-hidden bg-white rounded-md shadow">
               <div className="flex flex-row space-x-4">
-                <div className="h-12 w-12 block bg-gray-200 flex-shrink-0" />
-                <div className="h-12 w-full block bg-gray-200" />
+                <div className="flex-shrink-0 block w-12 h-12 bg-gray-200" />
+                <div className="block w-full h-12 bg-gray-200" />
               </div>
             </li>
-            <li className="bg-white shadow overflow-hidden rounded-md px-4 py-4">
+            <li className="px-4 py-4 overflow-hidden bg-white rounded-md shadow">
               <div className="flex flex-row space-x-4">
-                <div className="h-12 w-12 block bg-gray-200 flex-shrink-0" />
-                <div className="h-12 w-full block bg-gray-200" />
+                <div className="flex-shrink-0 block w-12 h-12 bg-gray-200" />
+                <div className="block w-full h-12 bg-gray-200" />
               </div>
             </li>
           </ul>
@@ -63,8 +63,8 @@ const Profile: FunctionalComponent<Props> = ({ guid, isEditable }) => {
     );
 
   return (
-    <div className="flex flex-col h-full items-center justify-center">
-      <div className="px-4 w-full flex flex-col space-y-6 py-4">
+    <div className="flex flex-col items-center justify-center h-full">
+      <div className="flex flex-col w-full px-4 py-4 space-y-6">
         <ProfileImage
           emoji={data.emoji}
           isEditable={isEditable}
