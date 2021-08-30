@@ -1,4 +1,5 @@
-**/node_modules
+**/target/
+**/node_modules/
 .chalicevenv
 backend/runtime/.chalice/deployments/
 backend/runtime/.chalice/venv/
